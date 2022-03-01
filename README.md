@@ -1,7 +1,7 @@
 # SlantedTextCompose
 | [中文说明](docs/README_CN.md) | 
 
-Slated Text for Jetpack Compose
+Slanted Text for Jetpack Compose
 
 
 
