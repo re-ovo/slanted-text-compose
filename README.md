@@ -2,7 +2,7 @@
 Slated Text for Jetpack Compose
 
 ## Preview
-[]: /docs/art/screenshot_1.png
+![](/docs/art/screenshot_1.png)
 
 ## Adding dependency
 1. Add jitpack.io as your dependency repository
@@ -43,4 +43,3 @@ SlantedText(
 ```
 
 ## License
-[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
