@@ -1,5 +1,5 @@
 # SlantedTextCompose
-| [中文说明](docs/zh.md) | 
+| [中文说明](docs/README_CN.md) | 
 
 Slated Text for Jetpack Compose
 
