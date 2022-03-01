@@ -1,14 +1,10 @@
 # SlantedTextCompose
-| [中文说明](docs/zh.md) | 
+为Compose添加倾斜标签组件
 
-Slated Text for Jetpack Compose
-
-
-
-## Preview
+## 预览效果
 ![](/docs/art/screenshot_1.png)
 
-## Adding dependency
+## 添加依赖
 1. Add jitpack.io as your dependency repository
 ```groovy
     allprojects {
@@ -26,7 +22,7 @@ Slated Text for Jetpack Compose
   }
 ```
 
-## Quick start
+## 快速开始
 ```kotlin
 SlantedText(
     text = "Slant",
@@ -46,7 +42,7 @@ SlantedText(
 
 ```
 
-## License
+## 许可证
 ```text
 MIT License
 
