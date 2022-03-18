@@ -56,7 +56,7 @@ fun SlantedText(
         modifier = Modifier.wrapContentSize()
     ) {
         content()
-        AnimatedVisibility(visible) {
+        if(visible) {
             Canvas(
                 modifier = Modifier
                     .matchParentSize()
