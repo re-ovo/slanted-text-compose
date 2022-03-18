@@ -2,6 +2,7 @@ package me.rerere.slantedtext
 
 import android.graphics.Paint
 import android.graphics.Typeface
+import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.foundation.Canvas
 import androidx.compose.foundation.layout.BoxWithConstraints
 import androidx.compose.foundation.layout.wrapContentSize
@@ -25,6 +26,7 @@ private val aTan = atan(1f)
 /**
  * A composable that draws a slanted text.
  *
+ * @param visible whether the text is visible or not
  * @param text the text to draw
  * @param textSize the text size
  * @param bold whether the text should be bold
@@ -39,6 +41,7 @@ private val aTan = atan(1f)
  */
 @Composable
 fun SlantedText(
+    visible: Boolean = true,
     text: String,
     textSize: TextUnit,
     bold: Boolean = true,
@@ -53,61 +56,63 @@ fun SlantedText(
         modifier = Modifier.wrapContentSize()
     ) {
         content()
-        Canvas(
-            modifier = Modifier
-                .matchParentSize()
-                .clipToBounds(),
-            onDraw = {
-                val width = size.width
-                val height = size.height
+        AnimatedVisibility(visible) {
+            Canvas(
+                modifier = Modifier
+                    .matchParentSize()
+                    .clipToBounds(),
+                onDraw = {
+                    val width = size.width
+                    val height = size.height
 
-                val thicknessPx = thickness.toPx()
-                    // Make sure the thickness is greater than the text height (15 px)
-                    .coerceAtLeast(textSize.toPx() + 15)
-                val paddingPx = padding.toPx()
+                    val thicknessPx = thickness.toPx()
+                        // Make sure the thickness is greater than the text height (15 px)
+                        .coerceAtLeast(textSize.toPx() + 15)
+                    val paddingPx = padding.toPx()
 
-                val paddingWidth = (paddingPx / sin(aTan))
-                val paddingHeight = (paddingPx / cos(aTan))
+                    val paddingWidth = (paddingPx / sin(aTan))
+                    val paddingHeight = (paddingPx / cos(aTan))
 
-                val thicknessWidth = (thicknessPx / sin(aTan))
-                val thicknessHeight = (thicknessPx / cos(aTan))
+                    val thicknessWidth = (thicknessPx / sin(aTan))
+                    val thicknessHeight = (thicknessPx / cos(aTan))
 
-                val path = getBackGroundPath(
-                    slantedMode,
-                    thicknessWidth,
-                    thicknessHeight,
-                    paddingWidth,
-                    paddingHeight,
-                    width,
-                    height
-                )
-                drawPath(path, backGroundColor)
-
-                drawContext.canvas.nativeCanvas.apply {
-                    save()
-
-                    val (x, y) = calculateTextPosition(
+                    val path = getBackGroundPath(
                         slantedMode,
-                        textSize.toPx(),
-                        paddingPx,
-                        thicknessPx,
+                        thicknessWidth,
+                        thicknessHeight,
+                        paddingWidth,
+                        paddingHeight,
                         width,
                         height
                     )
+                    drawPath(path, backGroundColor)
 
-                    rotate(getRotateDegree(slantedMode), x, y)
-                    drawText(text, x, y, Paint().apply {
-                        this.textSize = textSize.toPx()
-                        this.color = textColor.toArgb()
-                        this.textAlign = Paint.Align.CENTER
-                        this.isAntiAlias = true
-                        this.typeface = if(!bold) Typeface.DEFAULT else Typeface.DEFAULT_BOLD
-                    })
+                    drawContext.canvas.nativeCanvas.apply {
+                        save()
 
-                    restore()
+                        val (x, y) = calculateTextPosition(
+                            slantedMode,
+                            textSize.toPx(),
+                            paddingPx,
+                            thicknessPx,
+                            width,
+                            height
+                        )
+
+                        rotate(getRotateDegree(slantedMode), x, y)
+                        drawText(text, x, y, Paint().apply {
+                            this.textSize = textSize.toPx()
+                            this.color = textColor.toArgb()
+                            this.textAlign = Paint.Align.CENTER
+                            this.isAntiAlias = true
+                            this.typeface = if (!bold) Typeface.DEFAULT else Typeface.DEFAULT_BOLD
+                        })
+
+                        restore()
+                    }
                 }
-            }
-        )
+            )
+        }
     }
 }
 
